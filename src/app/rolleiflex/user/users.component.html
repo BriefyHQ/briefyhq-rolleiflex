@@ -18,13 +18,6 @@
             <md-card class="user-card p-0">
               <md-card-title class="mat-bg-primary">
                 <div class="card-title-text">
-                  <avatar
-                    [email]="user.email"
-                    [name]="user.fullname"
-                    [size]="36"
-                    background="#116b67"
-                    [displayType]="'circle'">
-                  </avatar>
                   <a routerLink="{{user.absolute_url}}">{{user.fullname}}</a>
                   <span fxFlex></span>
                   <button md-icon-button [mdMenuTriggerFor]="userMenu" class="">
