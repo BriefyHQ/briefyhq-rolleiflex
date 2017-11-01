@@ -1,0 +1,43 @@
+<md-toolbar class="topbar">
+  <!-- Sidenav toggle button -->
+  <button
+    md-icon-button
+    id="sidenavToggle"
+    (click)="toggleSidenav()"
+    md-tooltip="Toggle Hide/Open">
+    <md-icon>menu</md-icon>
+  </button>
+
+  <!-- Search form -->
+  <div
+    fxFlex
+    *ngIf="enableSearch"
+    fxHide.lt-sm="true"
+    class="search-bar">
+    <form class="top-search-form">
+      <md-icon role="img">search</md-icon>
+      <input autofocus="true" placeholder="Search" type="text">
+    </form>
+  </div>
+  <span fxFlex></span>
+  <!-- Language Switcher -->
+  <md-select
+    *ngIf="enableLanguageSelection"
+    placeholder=""
+    name="currentLang"
+    [(ngModel)]="currentLang"
+    (change)="setLang()">
+      <md-option *ngFor="let lang of availableLangs" [value]="lang.code" ngDefaultControl>{{ lang.name }}</md-option>
+  </md-select>
+
+  <!-- Top left user menu -->
+  <button md-icon-button [mdMenuTriggerFor]="accountMenu" class="topbar-button-right">
+    <md-icon>person</md-icon>
+  </button>
+  <md-menu #accountMenu="mdMenu">
+    <button md-menu-item [routerLink]="['/auth/logout']">
+      <md-icon>exit_to_app</md-icon>
+      <span>Logout</span>
+    </button>
+  </md-menu>
+</md-toolbar>

@@ -1,0 +1,64 @@
+<!-- My sets -->
+<div fxLayout="row" fxLayoutWrap="wrap">
+  <div fxFlex="100">
+    <md-card class="item-card">
+      <md-card-title>
+        <h1>{{ title|translate }}</h1>
+        <span fxFlex></span>
+      </md-card-title>
+      <md-card-content>
+        <div fxLayout="row" fxLayoutWrap="wrap">
+          <div fxFlex="100">Displaying {{ itemsCount }} of {{ pagination.total }}</div>
+          <div
+            *ngFor="let group of items"
+            fxFlex="100"
+            fxFlex.gt-sm="20"
+            fxFlex.sm="50"
+            >
+            <md-card class="group-card p-0">
+              <md-card-title class="mat-bg-primary">
+                <div class="card-title-text">
+                  <a routerLink="{{group.absolute_url}}">{{group.title}}</a>
+                  <span fxFlex></span>
+                  <button md-icon-button [mdMenuTriggerFor]="groupMenu" class="">
+                      <md-icon class="">more_vert</md-icon>
+                  </button>
+                  <md-menu #groupMenu="mdMenu">
+                    <a routerLink="{{group.absolute_url}}">
+                      <button md-menu-item>View</button>
+                    </a>
+                    <a routerLink="{{group.absolute_url}}/edit">
+                      <button md-menu-item>Edit</button>
+                    </a>
+                  </md-menu>
+                </div>
+                <md-divider></md-divider>
+              </md-card-title>
+              <md-card-content>
+                <!-- group detail lines-->
+                <div class="group-details">
+                  <p>{{group.description}}</p>
+                  <p>
+                    <md-icon color="primary">group</md-icon>
+                    <a routerLink='/users/active' [queryParams]="{'groups.slug': group.slug}">{{group.total_active_users}}</a>
+                  </p>
+                  <p>
+                    <md-icon class="text-muted">group</md-icon>
+                    <a routerLink='/users/all' [queryParams]="{'groups.slug': group.slug}">{{group.total_users}}</a>
+                  </p>
+                  <p><md-icon class="text-muted">card_membership</md-icon>{{group.slug}}</p>
+                  <p><md-icon class="text-muted">date_range</md-icon>
+                    <span>Created</span>
+                    <span *ngIf="group.created_at">
+                      {{group.created_at | date}}
+                    </span>
+                  </p>
+                </div>
+              </md-card-content>
+            </md-card>
+          </div>
+        </div>
+      </md-card-content>
+    </md-card>
+  </div>
+</div>

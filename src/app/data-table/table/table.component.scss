@@ -1,0 +1,68 @@
+table.leica {
+  background-color: white;
+  th {
+    > a {
+      color: black;
+      &::after {
+        opacity: 0;
+        content: '\E5D8';
+        color: black;
+        vertical-align: top;
+        display: inline-block;
+        font-family: 'Material Icons';
+        font-weight: normal;
+        font-style: normal;
+        font-size: 14px;
+        margin: 0 2px 0 2px;
+        -webkit-font-smoothing: antialiased;
+      }
+      &.not-sorted {
+        &:hover {
+          &::after {
+            opacity: 1;
+          }
+        }
+      }
+      &.sorted {
+        &.sorted-asc {
+          &::after {
+            opacity: 1;
+          }
+        }
+        &.sorted-desc {
+          &::after {
+            content: '\E5DB';
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+  td {
+    padding: 5px;
+    font-size: 12px;
+  }
+  tbody {
+    > tr {
+      > td {
+        height: 40px;
+      }
+    }
+  }
+  tfoot {
+    border-top: 1px solid #d0d0d0;
+    background-color: #eef1f3;
+    > tr {
+      > td {
+        text-align: right;
+        > span.counter {
+          color: #444;
+          display: inline-block;
+          font-size: 1.2rem;
+          float: left;
+          margin: 5px 10px;
+        }
+      }
+    }
+  }
+}

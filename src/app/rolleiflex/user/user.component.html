@@ -1,0 +1,85 @@
+<!-- My set -->
+<div fxLayout="row" fxLayoutWrap="wrap">
+  <div fxFlex="100">
+    <md-card class="item-card p-0">
+      <md-card-title class="">
+        <div class="card-title-text">
+          <avatar
+            [email]="item.email"
+            [name]="item.fullname"
+            [size]="48"
+            background="#116b67"
+            [displayType]="'circle'">
+          </avatar>
+          <span>{{item.fullname}}</span>
+          <span fxFlex></span>
+          <button md-icon-button [mdMenuTriggerFor]="userMenu" class="">
+              <md-icon class="">more_vert</md-icon>
+          </button>
+          <md-menu #userMenu="mdMenu">
+            <a routerLink="{{item.absolute_url}}/edit">
+              <button md-menu-item>Edit</button>
+            </a>
+          </md-menu>
+        </div>
+        <md-divider></md-divider>
+      </md-card-title>
+      <md-card-content>
+        <div class="user-details">
+          <p><md-icon class="text-muted">text_format</md-icon>
+            <span>First name: </span>
+            <span class="text-muted">{{item.first_name}}</span>
+          </p>
+          <p><md-icon class="text-muted">text_format</md-icon>
+            <span>Last name: </span>
+            <span class="text-muted">{{item.last_name}}</span>
+          </p>
+          <p><md-icon class="text-muted">verified_user</md-icon>
+            <span>Created: </span>
+            <span *ngIf="item.created_at" class="text-muted">
+              {{item.created_at | date}}
+            </span>
+          </p>
+          <p><md-icon class="text-muted">schedule</md-icon>
+            <span>Last login: </span>
+            <span *ngIf="item.last_login" class="text-muted">
+              {{item.last_login | date}}
+            </span>
+            <span *ngIf="!item.last_login" class="text-muted">
+              Never
+            </span>
+          </p>
+          <p>
+            <md-chip-list>
+              <md-chip selected="true" color="accent" *ngIf="item.isCreative">
+                <md-icon class="text-muted">camera_alt</md-icon>
+                <span class="text-muted">Creative</span>
+              </md-chip>
+              <md-chip selected="true" color="accent" *ngIf="item.isCustomer">
+                <md-icon class="text-muted">business</md-icon>
+                Customer
+              </md-chip>
+              <md-chip selected="true" color="accent" *ngIf="item.isInternal">
+                <md-icon class="text-muted">cake</md-icon>
+                Briefy
+              </md-chip>
+            </md-chip-list>
+          </p>
+          <p>
+            <md-list>
+              <md-list-item *ngFor="let group of item.groups" class="mb-1">
+                <div fxFlex="row" fxLayoutWrap="wrap">
+                  <md-icon md-list-icon color="primary" class="mr-1 icon-circle">group</md-icon>
+                  <div fxFlex="column">
+                    <h4 md-line class="m-0 font-normal fz-1">{{group.slug}}</h4>
+                    <p md-line class="m-0"> {{group.name}} </p>
+                  </div>
+                </div>
+              </md-list-item>
+            </md-list>
+          </p>
+        </div>
+      </md-card-content>
+    </md-card>
+  </div>
+</div>

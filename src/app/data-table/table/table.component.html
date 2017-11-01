@@ -1,0 +1,32 @@
+<div class="example-container mat-elevation-z8">
+
+  <md-table #table [dataSource]="rows" mdSort (sort)="onSort($event)">
+    <ng-container *ngFor="let column of columns">
+      <ng-container mdColumnDef="{{ column.field }}" *ngIf="column.sortable">
+        <md-header-cell *mdHeaderCellDef md-sort-header>{{ column.name }}</md-header-cell>
+        <md-cell *mdCellDef="let row">
+          <brf-record-value [field]="column" [record]="row"></brf-record-value>
+        </md-cell>
+      </ng-container>
+      <ng-container mdColumnDef="{{ column.field }}" *ngIf="!column.sortable">
+        <md-header-cell *mdHeaderCellDef>{{ column.name }}</md-header-cell>
+        <md-cell *mdCellDef="let row">
+          <brf-record-value [field]="column" [record]="row"></brf-record-value>
+        </md-cell>
+      </ng-container>
+    </ng-container>
+
+
+    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+    <md-row *mdRowDef="let row; columns: displayedColumns;"></md-row>
+  </md-table>
+  <md-paginator
+    #paginator
+    [length]="totalRows"
+    [pageIndex]="currentPage - 1"
+    [pageSize]="rowsPerPage"
+    (page)="onPage($event)"
+  >
+  </md-paginator>
+
+</div>

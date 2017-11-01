@@ -1,0 +1,88 @@
+language: node_js
+sudo: required
+dist: trusty
+addons:
+  apt:
+    sources:
+    - google-chrome
+    packages:
+    - google-chrome-stable
+node_js:
+- '6'
+cache:
+  directories:
+  - node_modules
+branches:
+  only:
+  - master
+  - develop
+before_install:
+- export CHROME_BIN=chromium-browser
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+- sleep 3
+- npm i -g npm@^3
+- npm i -g @angular/cli@latest
+script:
+- ng lint
+- ng test -sr
+- .travis/run_build.sh
+after_success:
+- mkdir packages
+- cd dist
+- tar czf ../packages/briefyhq-rolleiflex.tar.gz *
+- cd ../
+- ls -la packages/
+- git fetch --unshallow
+notifications:
+  slack: briefy:qxjOPwcrGEtVx3aCQBr812t9
+deploy:
+  - provider: s3
+    access_key_id: AKIAJB5RBIXPYQ5EU2IA
+    secret_access_key:
+      secure: Jgr9VBqZ+cL8kZCS2683/PUXkNZ9sn4bfpP7MERMSS3XiHxpI/5Or3cdZtXjsBRW7Eo5YXEE44Q0tHIMq90TqYnz2rYYLUlateSEBNznuiCdk39eFrjRRRZtqufK1mGNwKdT13LbYeBvolXxgolHRrIxYXtq9xiHOIzvJlNHBMT/D5lS0EuMaNf+aJLBpFj/AKgpNUluzsuREGpHdvqP9Fr/FFw6xaUnPWmtloZekspZolp/XeMNK9tRZ0tCjYtnJVzM6sNMC0STZDMF95nmY8aZC/sqmY29g4IahsEL+rHjGn0eNtTn8iEJWyiIocjXfTWQDDrkkHSCnS0dooE0IaZUiq/CIEaGEfWQZT7H7zrUJuM6eTv2bqdAcyuw5e24lWt2yPLJbdCGNH9c+vf4yzsvmjnaNx/HCrUTkeM5ohmoBdXxHHknW6us4FUc0zl6LMSdqjxF0fLpp6XP+x9zoQVUk1kTQl9hx3wcKFu5NNp2vHAw10uBq529XEqsfkDsZjEq1o99zZOL4/+DMntiKiTaW3vjphvxt3qwKEZNfNxYNOytfK8QtCrIu277tncwMV553x27HAO0QBCIt5EedpqD5UfHjtbb+QPnhzpyOQAur/137IcLFe7HgQI4C8WrFFcvo8+5Aq7/KGrxgRwVWfF1BA6bueu8ipNLJpDKu6k=
+    bucket: app-stg-briefy
+    region: us-east-1
+    skip_cleanup: true
+    local-dir: packages
+    upload-dir: packages/${TRAVIS_COMMIT}
+    acl: public_read
+    on:
+      repo: BriefyHQ/briefyhq-rolleiflex
+      branch: develop
+  - provider: s3
+    access_key_id: AKIAJB5RBIXPYQ5EU2IA
+    secret_access_key:
+      secure: Jgr9VBqZ+cL8kZCS2683/PUXkNZ9sn4bfpP7MERMSS3XiHxpI/5Or3cdZtXjsBRW7Eo5YXEE44Q0tHIMq90TqYnz2rYYLUlateSEBNznuiCdk39eFrjRRRZtqufK1mGNwKdT13LbYeBvolXxgolHRrIxYXtq9xiHOIzvJlNHBMT/D5lS0EuMaNf+aJLBpFj/AKgpNUluzsuREGpHdvqP9Fr/FFw6xaUnPWmtloZekspZolp/XeMNK9tRZ0tCjYtnJVzM6sNMC0STZDMF95nmY8aZC/sqmY29g4IahsEL+rHjGn0eNtTn8iEJWyiIocjXfTWQDDrkkHSCnS0dooE0IaZUiq/CIEaGEfWQZT7H7zrUJuM6eTv2bqdAcyuw5e24lWt2yPLJbdCGNH9c+vf4yzsvmjnaNx/HCrUTkeM5ohmoBdXxHHknW6us4FUc0zl6LMSdqjxF0fLpp6XP+x9zoQVUk1kTQl9hx3wcKFu5NNp2vHAw10uBq529XEqsfkDsZjEq1o99zZOL4/+DMntiKiTaW3vjphvxt3qwKEZNfNxYNOytfK8QtCrIu277tncwMV553x27HAO0QBCIt5EedpqD5UfHjtbb+QPnhzpyOQAur/137IcLFe7HgQI4C8WrFFcvo8+5Aq7/KGrxgRwVWfF1BA6bueu8ipNLJpDKu6k=
+    bucket: app-stg-briefy
+    region: us-east-1
+    skip_cleanup: true
+    local-dir: packages
+    upload-dir: packages/_latest
+    acl: public_read
+    on:
+      repo: BriefyHQ/briefyhq-rolleiflex
+      branch: develop
+  - provider: s3
+    access_key_id: AKIAJB5RBIXPYQ5EU2IA
+    secret_access_key:
+      secure: Jgr9VBqZ+cL8kZCS2683/PUXkNZ9sn4bfpP7MERMSS3XiHxpI/5Or3cdZtXjsBRW7Eo5YXEE44Q0tHIMq90TqYnz2rYYLUlateSEBNznuiCdk39eFrjRRRZtqufK1mGNwKdT13LbYeBvolXxgolHRrIxYXtq9xiHOIzvJlNHBMT/D5lS0EuMaNf+aJLBpFj/AKgpNUluzsuREGpHdvqP9Fr/FFw6xaUnPWmtloZekspZolp/XeMNK9tRZ0tCjYtnJVzM6sNMC0STZDMF95nmY8aZC/sqmY29g4IahsEL+rHjGn0eNtTn8iEJWyiIocjXfTWQDDrkkHSCnS0dooE0IaZUiq/CIEaGEfWQZT7H7zrUJuM6eTv2bqdAcyuw5e24lWt2yPLJbdCGNH9c+vf4yzsvmjnaNx/HCrUTkeM5ohmoBdXxHHknW6us4FUc0zl6LMSdqjxF0fLpp6XP+x9zoQVUk1kTQl9hx3wcKFu5NNp2vHAw10uBq529XEqsfkDsZjEq1o99zZOL4/+DMntiKiTaW3vjphvxt3qwKEZNfNxYNOytfK8QtCrIu277tncwMV553x27HAO0QBCIt5EedpqD5UfHjtbb+QPnhzpyOQAur/137IcLFe7HgQI4C8WrFFcvo8+5Aq7/KGrxgRwVWfF1BA6bueu8ipNLJpDKu6k=
+    bucket: app-live-briefy
+    region: eu-central-1
+    skip_cleanup: true
+    local-dir: packages
+    upload-dir: packages/_latest
+    acl: public_read
+    on:
+      repo: BriefyHQ/briefyhq-rolleiflex
+      branch: master
+  - provider: deis
+    controller: https://deis.stg.briefy.co
+    cli_version: v2.4.0
+    app: briefyhq-rolleiflex
+    username: ci
+    password:
+      secure: W+xYtzuFaWyF0Eh1bJznBK7FV8+M9ZDlkk2N9Sq3BqIZR6MHNE+4Wwc7Yf9LiTwEBi6MXUsu4pSJH16qk3ftaTryq8deKBWq7g0wiuB+2Qt92kabrayQQ6K1gjAcyLbz//DLNJJOafmwHiHuMooge5IQ5EGW1MEZyTPdMqRYkZhUrozYoqaChyh/un3xoVDpET0JWekV/y71ycQhuv/qparEVIZtSpYAi4UV9K4SBguM6ychO9kZAKJhhPQO9eIS5iPMD8ZLfA0/Vk0Z7NFYxzA0p+OJMvy+wVyqS7jSC78i5uKIyFOjr8Lqynbn/n1hg35K81Ovx/IvCfRKTyQNFdX4Hk8ICxzy4sma23Gj85K3DnPL+VaK49bd5RqVMRdqFoyVEs8nUWJoBbp62bmbWileYi692+krtxi6kVQfCq/rHEkcZ0G3JJjlC/79N9Dz0IxBQmxhQKVOmUnQxMMWs5t9mqWE3Cjgqye9+jEn97L4y7CSY8MMPqgf+9GvMMqH7+nJa2n6oE/ng85HRC9QZHBMIxy4DXCoEQHAL+cr8q4OkTipKU4bqssV6+n/QA25mFfEiqNj92K+vVgxe5VWgIj6q++2zHChXixx8o9j9qO3wrwJJSAuG5zTuKNzyMLmNqgralydaA6volrJDUZ47W1Q2GieZdTMyRqF/tTlqnc=
+    on:
+      repo: BriefyHQ/briefyhq-rolleiflex
+      branch: develop

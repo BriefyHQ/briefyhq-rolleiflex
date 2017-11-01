@@ -1,0 +1,42 @@
+<!-- Group -->
+<div fxLayout="row" fxLayoutWrap="wrap">
+  <div fxFlex="100">
+    <md-card class="item-card p-0">
+      <md-card-title class="">
+        <div class="card-title-text">
+          <span>{{item.title}} ({{ item.slug }})</span>
+          <span fxFlex></span>
+          <button md-icon-button [mdMenuTriggerFor]="groupMenu" class="">
+              <md-icon class="">more_vert</md-icon>
+          </button>
+          <md-menu #groupMenu="mdMenu">
+            <a routerLink="{{item.absolute_url}}/edit">
+              <button md-menu-item>Edit</button>
+            </a>
+          </md-menu>
+        </div>
+        <md-divider></md-divider>
+      </md-card-title>
+      <md-card-content>
+        <!-- group detail lines-->
+        <div class="group-details">
+          <p>{{item.description}}</p>
+          <p>
+            <md-icon color="primary">group</md-icon>
+            <a routerLink='/users/active' [queryParams]="{'groups.slug': item.slug}">{{item.total_active_users}}</a>
+          </p>
+          <p>
+            <md-icon class="text-muted">group</md-icon>
+            <a routerLink='/users/all' [queryParams]="{'groups.slug': item.slug}">{{item.total_users}}</a>
+          </p>
+          <p><md-icon class="text-muted">date_range</md-icon>
+            <span>Created</span>
+            <span *ngIf="item.created_at">
+              {{item.created_at | date}}
+            </span>
+          </p>
+        </div>
+      </md-card-content>
+    </md-card>
+  </div>
+</div>

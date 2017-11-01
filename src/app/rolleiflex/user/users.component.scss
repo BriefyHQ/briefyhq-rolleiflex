@@ -1,0 +1,15 @@
+.user-card .card-title-text {
+  padding: .5rem 1.5rem !important;
+  align-items: center;
+}
+.user-card .card-title-text .md .mat-icon {
+  vertical-align: top;
+}
+.user-card .user-details .mat-icon {
+  vertical-align: top;
+  margin-right: .5rem;
+}
+
+.user-card .user-details .mat-chip .text-muted {
+  color: white;
+}

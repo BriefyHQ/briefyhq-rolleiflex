@@ -1,0 +1,111 @@
+{
+
+  "errors": {
+    "retry": "An error occured, try again later",
+    "HTTP": {
+      "403": {
+        "title": "Forbidden",
+        "description": "You are not authorized to see this content."
+      },
+      "404": {
+        "title": "Not found",
+        "description": "Content not found."
+      },
+      "50x": {
+        "title": "Server error",
+        "description": "There was an error on the communication with our servers."
+      },
+      "default": {
+        "title": "Error",
+        "description": "Sorry ."
+      }
+    }
+  },
+
+  "auth": {
+    "roles": {
+      "r:bizdev": "Business Development",
+      "r:briefy": "Briefy User",
+      "r:customers": "Customer",
+      "r:finance": "Finance",
+      "r:management": "Management",
+      "r:pm": "Project Manager",
+      "r:product": "Product",
+      "r:professionals": "Creative",
+      "r:qa": "QA",
+      "r:scout": "Scouting",
+      "r:support": "Support",
+      "r:tech": "Tech",
+      "r:user": "User"
+    },
+    "login": {
+      "breadcrumb": "Login",
+      "title": "Login to your account",
+      "actionMessage": "Log in",
+      "routes": {
+        "forgot": "Forgot Password"
+      }
+    },
+    "forgot": {
+      "breadcrumb": "Forgot Password",
+      "title": "Enter the email address you signed up with below. An email will be sent containing a link to reset your password.",
+      "actionMessage": "Send reset instructions",
+      "feedback": {
+        "line1": "Instructions about how to reset your password were sent to the email:",
+        "line3": "Follow then to be able to login to our platform."
+      },
+      "routes": {
+        "login": "Back to login"
+      }
+    },
+    "reset": {
+      "breadcrumb": "Reset Password",
+      "title": "Please choose a new password",
+      "actionMessage": "Reset password",
+      "feedback": {
+        "line1": "Your password has been changed."
+      },
+      "routes": {
+        "login": "Back to login"
+      }
+    },
+    "logout": {
+      "breadcrumb": "Logout",
+      "title": "Logout"
+    }
+  },
+
+  "ROLLEIFLEX": {
+    "DASHBOARD": {
+      "TITLE": "Dashboard",
+      "WELCOME": "Hello {{value}}"
+    },
+    "USERS": {
+      "HEADER": "Users",
+      "ALL": "All",
+      "ADD": "New User",
+      "ITEM": {
+        "HEADER": "User"
+      },
+      "WORKFLOW": {
+        "CREATED": "Created",
+        "ACTIVE": "Active",
+        "INACTIVE": "Inactive"
+      }
+    },
+    "GROUPS": {
+      "HEADER": "Groups",
+      "ALL": "All",
+      "ADD": "New Group",
+      "ITEM": {
+        "HEADER": "Group"
+      },
+      "WORKFLOW": {
+        "CREATED": "Created",
+        "ACTIVE": "Active",
+        "INACTIVE": "Inactive"
+      }
+    }
+  }
+
+}

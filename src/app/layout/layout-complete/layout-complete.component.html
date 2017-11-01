@@ -1,0 +1,44 @@
+<md-sidenav-container class="app-side-nav-container">
+  <!-- Main side navigation -->
+  <md-sidenav #sidenav [opened]="!isNavOver()" [mode]="isNavOver() ? 'over' : 'side'" class="sidebar-panel">
+    <div id="scroll-area" class="navigation-hold" fxLayout="column">
+      <div class="branding mat-bg-primary">
+        <img src="assets/images/logo-text.png" alt="" class="app-logo">
+      </div>
+      <div class="app-user">
+        <div class="app-user-photo">
+          <avatar
+            [email]="user.email"
+            [name]="user.fullname"
+            [size]="64"
+            background="#116b67"
+            [displayType]="'circle'">
+          </avatar>
+        </div>
+        <span class="app-user-name">
+          {{ user.fullname }}
+        </span>
+      </div>
+      <app-navigation></app-navigation>
+    </div>
+  </md-sidenav>
+
+  <!-- Top Bar -->
+  <!-- Template reference variables of Left sidebar and Right notification is supplied -->
+  <app-topbar [sidenav]="sidenav" (onLangChange)="translate.use($event)"></app-topbar>
+
+  <!-- App content -->
+  <app-breadcrumb #breadcrumb></app-breadcrumb>
+  <div class="rightside-content-hold">
+    <ng-container *ngIf="!displayLoading">
+      <router-outlet></router-outlet>
+    </ng-container>
+    <div class="app-loader" *ngIf="displayLoading">
+      <div class="spinner">
+        <div class="double-bounce1 mat-bg-primary"></div>
+        <div class="double-bounce2 mat-bg-accent"></div>
+      </div>
+    </div>
+  </div>
+
+</md-sidenav-container>

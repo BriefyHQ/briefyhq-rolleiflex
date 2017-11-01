@@ -1,0 +1,34 @@
+<!-- My set -->
+<div fxLayout="row" fxLayoutWrap="wrap">
+  <div fxFlex="100">
+    <md-card class="item-card p-0">
+      <md-card-title class="">
+        <div class="card-title-text">
+          <span translate>ROLLEIFLEX.GROUPS.ADD</span>
+          <span fxFlex></span>
+        </div>
+        <md-divider></md-divider>
+      </md-card-title>
+      <md-card-content>
+      <form role="form" novalidate [formGroup]="form" (ngSubmit)="submit()">
+        <div class="">
+          <small class="text-center form-error-msg" *ngIf="displayErrorMessage" role="alert">
+            {{ errorMessage | translate }}
+          </small>
+          <formly-form [model]="item" [fields]="fields" [form]="form" class="full-width">
+          </formly-form>
+          <button
+            md-raised-button
+            class="mat-primary full-width mb-1"
+            [disabled]="!isEnabled">{{ actionMessage | translate }}</button>
+          <div class="text-center">
+            <ng-container *ngFor="let action of routeActions">
+              <a [routerLink]="[action.route]" class="mat-primary text-center full-width">{{ action.title | translate }}</a>
+            </ng-container>
+          </div>
+        </div>
+      </form>
+      </md-card-content>
+    </md-card>
+  </div>
+</div>

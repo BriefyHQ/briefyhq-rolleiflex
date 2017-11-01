@@ -1,0 +1,89 @@
+<!-- My sets -->
+<div fxLayout="row" fxLayoutWrap="wrap">
+  <div fxFlex="100">
+    <md-card class="item-card">
+      <md-card-title>
+        <h1>{{ title|translate }}</h1>
+        <span fxFlex></span>
+      </md-card-title>
+      <md-card-content>
+        <div fxLayout="row" fxLayoutWrap="wrap">
+          <div fxFlex="100">Displaying {{ itemsCount }} of {{ pagination.total }}</div>
+          <div
+            *ngFor="let user of items"
+            fxFlex="100"
+            fxFlex.gt-sm="20"
+            fxFlex.sm="50"
+            >
+            <md-card class="user-card p-0">
+              <md-card-title class="mat-bg-primary">
+                <div class="card-title-text">
+                  <avatar
+                    [email]="user.email"
+                    [name]="user.fullname"
+                    [size]="36"
+                    background="#116b67"
+                    [displayType]="'circle'">
+                  </avatar>
+                  <a routerLink="{{user.absolute_url}}">{{user.fullname}}</a>
+                  <span fxFlex></span>
+                  <button md-icon-button [mdMenuTriggerFor]="userMenu" class="">
+                      <md-icon class="">more_vert</md-icon>
+                  </button>
+                  <md-menu #userMenu="mdMenu">
+                    <a routerLink="{{user.absolute_url}}">
+                      <button md-menu-item>View</button>
+                    </a>
+                    <a routerLink="{{user.absolute_url}}/edit">
+                      <button md-menu-item>Edit</button>
+                    </a>
+                  </md-menu>
+                </div>
+                <md-divider></md-divider>
+              </md-card-title>
+              <md-card-content>
+                <!-- user detail lines-->
+                <div class="user-details">
+                  <p><md-icon class="text-muted">email</md-icon>
+                    <span class="text-muted">{{user.email}}</span>
+                  </p>
+                  <p><md-icon class="text-muted">verified_user</md-icon>
+                    <span>Created: </span>
+                    <span *ngIf="user.created_at" class="text-muted">
+                      {{user.created_at | date}}
+                    </span>
+                  </p>
+                  <p><md-icon class="text-muted">schedule</md-icon>
+                    <span>Last login: </span>
+                    <span *ngIf="user.last_login" class="text-muted">
+                      {{user.last_login | date}}
+                    </span>
+                    <span *ngIf="!user.last_login" class="text-muted">
+                      Never
+                    </span>
+                  </p>
+                  <p>
+                    <md-chip-list>
+                      <md-chip selected="true" color="accent" *ngIf="user.isCreative">
+                        <md-icon class="text-muted">camera_alt</md-icon>
+                        <span class="text-muted">Creative</span>
+                      </md-chip>
+                      <md-chip selected="true" color="accent" *ngIf="user.isCustomer">
+                        <md-icon class="text-muted">business</md-icon>
+                        Customer
+                      </md-chip>
+                      <md-chip selected="true" color="accent" *ngIf="user.isInternal">
+                        <md-icon class="text-muted">cake</md-icon>
+                        Briefy
+                      </md-chip>
+                    </md-chip-list>
+                  </p>
+                </div>
+              </md-card-content>
+            </md-card>
+          </div>
+        </div>
+      </md-card-content>
+    </md-card>
+  </div>
+</div>
