@@ -13,10 +13,8 @@ function isUserAllowed(userGroups: string[]): boolean {
   const allowedGroups = environment.auth.allowedGroups;
   let status = true;
   if (allowedGroups.length > 0) {
-    console.log(allowedGroups);
     status = false;
     for (const groupSlug of userGroups) {
-      console.log(groupSlug);
       if (allowedGroups.indexOf(groupSlug) > -1) {
         return true;
       }
