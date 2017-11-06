@@ -18,7 +18,11 @@ export const environment = {
     jwt: {
       storageKey: 'token',
       domains: ['localhost:8000', 'api.stg.briefy.co'],
-    }
+    },
+    allowedGroups: [
+      'g:briefy_support',
+      'g:briefy_tech',
+    ]
   },
   features: {
     language: {

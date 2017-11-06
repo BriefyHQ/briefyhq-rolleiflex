@@ -1,3 +1,4 @@
+import { environment } from '../../../environments/environment';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormGroup } from '@angular/forms';
@@ -6,6 +7,21 @@ import { markFormControlErrors } from '../../form/form.helper';
 import { ValidationService } from '../../form/validation.service';
 import { IAuthResponse, IEmailLogin } from '../../auth/models/api.interface';
 import { BaseComponent } from '../base/base.component';
+
+
+function isUserAllowed(userGroups: string[]): boolean {
+  const allowedGroups = environment.auth.allowedGroups;
+  let status = true;
+  if (allowedGroups.length > 0) {
+    status = false;
+    for (const groupSlug of userGroups) {
+      if (allowedGroups.indexOf(groupSlug) > -1) {
+        return true;
+      }
+    }
+  }
+  return status;
+}
 
 
 @Component({
@@ -54,27 +70,38 @@ export class LoginComponent extends BaseComponent implements OnInit {
     }
   ];
 
+  private processError(status: number, errorData: any): void {
+    if (status === 401) {
+      this.errorMessage = errorData.message;
+      this.form.markAsPristine();
+    } else if (status === 400) {
+      const formControls = this.form.controls;
+      const errors = errorData.errors;
+      markFormControlErrors(formControls, errors);
+    }
+    this.submitButton.disabled = false;
+    this.progressBar.mode = 'determinate';
+  }
+
   submit() {
     this.submitButton.disabled = true;
     this.progressBar.mode = 'indeterminate';
     this.userService.emailLogin(this.model).subscribe(
         data => {
-          localStorage.setItem('token', data.token);
-          this.router.navigate(['/']);
+          const groups = data.user.groups;
+          if (isUserAllowed(groups)) {
+            localStorage.setItem('token', data.token);
+            this.router.navigate(['/']);
+          } else {
+            const status = 401;
+            const errorData = {message: 'You are not allowed to access this service.'};
+            this.processError(status, errorData);
+          }
         },
         error => {
           const status = error.status;
           const errorData = error.error;
-          if (status === 401) {
-            this.errorMessage = errorData.message;
-            this.form.markAsPristine();
-          } else if (status === 400) {
-            const formControls = this.form.controls;
-            const errors = errorData.errors;
-            markFormControlErrors(formControls, errors);
-          }
-          this.submitButton.disabled = false;
-          this.progressBar.mode = 'determinate';
+          this.processError(status, errorData);
         }
       );
   }
