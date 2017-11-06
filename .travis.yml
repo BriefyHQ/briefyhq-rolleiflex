@@ -73,6 +73,16 @@ deploy:
     local-dir: packages
     upload-dir: packages/_latest
     acl: public_read
+  - provider: s3
+    access_key_id: AKIAJB5RBIXPYQ5EU2IA
+    secret_access_key:
+      secure: Vr7G3KmVxQsng5WuspabeHFoaSo7QJnnLzmGZlBaYcZDGeQI/aD5s1Ui1Vja1UgopJyZdYRUIq3TQwipw9T9zaDPSe+6N/sSzFPxCEtgqaGVzj/16PRmbXGF20nnCvGD3qF1QkjvlpWEdSYgaHZDH1PWZcukAIfbVhIXcQngPCcUsd3fPkh+Bk5tRQScjlioPIF6NnBPXPmaJyLFo+1CKQaxBww/vKEZ9/AgdScMkcVrKKMe4RblvMIcvlBjsAEFQVJYmM6DG1hZi85DvaHUcOA+SGY8cRqznekLuAxM5n9frNDdshEzXNWg9N+2ou9ldL1jqaXks5cmfn2B4eZTjAeg+UNDim8Rlo4sfFewSIo/C9c2M2zkz2T+8gXg6ibuCiXbejEvrDAabkxLVLM6ruqPh5TWBfng3SSnWPNFfnlYA2uO7FXK9A2iJiiF68Dts9gMAcdYozy7S/NNyLfqJwxfYFoVn6tw0Pnx5L5zKqaTBxcRuiiXvLw+maIV4hg3j5bj99TCLjMKLlO7ndw3ryyGaNKTXNrIiFbJ3OWIQFHmzwUsBMi//eQrWWv5GSSg377pAMdoClH/PQE7TktFadOr3RI5DysS0mQ+qUz9zKFnOvVWbmTKzNt1VL1982NDcSnnbpi6zQPul/G76ODVAJfsfHwUKePNcWJrIoxoq6g=
+    bucket: app-live-briefy
+    region: eu-central-1
+    skip_cleanup: true
+    local-dir: packages
+    upload-dir: packages/${TRAVIS_COMMIT}
+    acl: public_read
     on:
       repo: BriefyHQ/briefyhq-rolleiflex
       branch: master
